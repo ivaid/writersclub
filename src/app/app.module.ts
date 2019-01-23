@@ -12,6 +12,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { UserProvider } from '../providers/user/user';
+import { WebapiProvider } from '../providers/webapi/webapi';
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,8 +26,12 @@ import { UserProvider } from '../providers/user/user';
     LoginPage
   ],
   imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
+    BrowserModule,HttpClientModule,
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({
+      name: 'writersClub',
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +46,8 @@ import { UserProvider } from '../providers/user/user';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider
+    UserProvider,
+    WebapiProvider
   ]
 })
 export class AppModule {}

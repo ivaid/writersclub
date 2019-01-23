@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the UserProvider provider.
 
@@ -15,8 +15,21 @@ user:any={
   role:1,
   stat:false
 };
-  constructor() {
-    console.log('Hello UserProvider Provider');
+  constructor(public store:Storage) {
+    
+  }
+  logout(){
+    this.store.clear();
+    this.checkAuth();
+  }
+  checkAuth(){
+    this.store.ready().then(e=>{
+      e.getItem("user").then(usr=>{
+        if(usr!==null){
+          this.user=usr;
+        }
+      });
+    });
   }
 
 }
